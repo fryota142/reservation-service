@@ -1,0 +1,8 @@
+h1 ログイン
+.row
+  .col-md-6
+    = bootstrap_form_for(:session, url: login_path) do |f|
+      = f.text_field :name
+      = f.password_field :password
+
+      = f.primary "login", class: "btn btn-outline-success"

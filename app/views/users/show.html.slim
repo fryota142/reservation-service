@@ -1,0 +1,4 @@
+h1 ユーザページ
+= "ようこそ#{@user.name}さん"
+br
+= link_to "ログアウト", logout_path, method: :delete, class: "btn btn-outline-danger"
