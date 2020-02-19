@@ -1,0 +1,22 @@
+.header-wrap.container-fluid[style="padding:10px;"]
+  .header
+    header
+      nav.navbar.navbar-dark.bg-dark.navbar-expand-lg.rounded
+        h1.navbar-brand
+          = link_to ReservationService, root_path, style: "color:white;"
+        button.navbar-toggler[type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"]
+          span.navbar-toggler-icon
+        #navbarNav.collapse.navbar-collapse.justify-content-end
+          ul.navbar-nav
+            li.nav-item.active.nav-link
+              = link_to "ホーム", root_path, style: "color:white;"
+            - if logged_in?
+              li.nav-item.active.nav-link
+                = link_to "ユーザ情報", user_path(id: current_user.id), style: "color:white;"
+              li.nav-item.active.nav-link
+                = link_to "ログアウト", logout_path, method: :delete, style: "color:white;"
+            - else
+              li.nav-item.active.nav-link
+                = link_to "ログイン", login_path, style: "color:white;"
+              li.nav-item.active.nav-link
+                = link_to "新規登録", new_user_path, style: "color:white;"

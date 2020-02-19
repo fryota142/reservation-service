@@ -16,11 +16,13 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+  rescue ActiveRecord::RecordNotFound => e
+    redirect_to :root, alert: 'User not found'
   end
 
   private
   def user_params
-    params.require(:user).permit(:name, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 
   def logged_in_user
