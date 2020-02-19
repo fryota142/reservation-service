@@ -1,10 +1,11 @@
-h1 ユーザー登録
+.text-center
+  h1 ユーザー登録
 
 .row
-  .col-md-6
+  .col-md-6.mx-auto
     = bootstrap_form_for @user do |f|
       = f.text_field :name
       = f.password_field :password
       = f.password_field :password_confirmation
 
-      = f.primary "Create my account", class: "btn btn-outline-primary"
+      = f.primary "登録", class: "btn btn-outline-primary"
