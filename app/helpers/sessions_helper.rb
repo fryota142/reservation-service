@@ -1,8 +1,8 @@
 module SessionsHelper
-  def log_in(user, type)
-    if type == "user"
+  def log_in(user)
+    if user.class == User
       session[:user_id] = user.id
-    elsif type == "fp"
+    elsif user.class == Fpuser
       session[:fp_user_id] = user.id
     end
   end

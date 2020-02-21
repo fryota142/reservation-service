@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, except: :new
+  before_action :logged_in_user, except: [:new, :create]
 
   def new
     @user = User.new
