@@ -13,13 +13,13 @@
 ActiveRecord::Schema.define(version: 2020_02_19_090407) do
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name"
+    t.string "name", limit: 15
     t.string "password_digest"
     t.text "introduction"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email"
-    t.index ["name"], name: "index_users_on_name", length: 15
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
 end
