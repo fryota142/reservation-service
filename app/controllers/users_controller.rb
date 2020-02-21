@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, except: [:new, :create]
+  before_action :require_login, only: %i(show)
 
   def new
     @user = User.new
@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 
-  def logged_in_user
+  def require_login
     unless logged_in?
       flash[:danger] = "Please log in."
       redirect_to login_url

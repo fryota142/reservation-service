@@ -1,13 +1,13 @@
-class FpusersController < ApplicationController
-  before_action :logged_in_user, except: [:new, :create]
+class FpUsersController < ApplicationController
+  before_action :require_login, only: %i(show)
 
   def new
-    @fpuser = Fpuser.new
+    @fp_user = FpUser.new
   end
 
   def create
-    @fpuser = Fpuser.new(fpuser_params)
-    if @fpuser.save
+    @fp_user = FpUser.new(fpuser_params)
+    if @fp_user.save
       redirect_to root_path
     else
       render 'new'
@@ -15,17 +15,17 @@ class FpusersController < ApplicationController
   end
 
   def show
-    @fpuser = Fpuser.find(params[:id])
+    @fp_user = FpUser.find(params[:id])
   rescue ActiveRecord::RecordNotFound => e
     redirect_to :root, alert: 'User not found'
   end
 
   private
   def fpuser_params
-    params.require(:fpuser).permit(:name, :email, :password, :password_confirmation)
+    params.require(:fp_user).permit(:name, :email, :password, :password_confirmation)
   end
 
-  def logged_in_user
+  def require_login
     unless logged_in?
       flash[:danger] = "Please log in."
       redirect_to login_url
