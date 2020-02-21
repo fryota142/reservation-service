@@ -1,0 +1,12 @@
+.text-center
+  h1 FPユーザー登録
+
+.row
+  .col-md-6.mx-auto
+    = bootstrap_form_for @fpuser do |f|
+      = f.text_field :name
+      = f.text_field :email
+      = f.password_field :password
+      = f.password_field :password_confirmation
+
+      = f.primary "登録", class: "btn btn-outline-primary"
