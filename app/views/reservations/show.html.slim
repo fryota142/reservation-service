@@ -1,1 +1,6 @@
-= @reservation
+h1 予約情報の詳細
+= @reservation.fp_user.name
+= @reservation.start_time
+
+- if current_user.class == User && !@reservation.reserved?
+  = link_to '予約', reservation_path(@reservation.id), method: :patch, class: "btn btn-outline-info btn-sm"
