@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_21_020505) do
+ActiveRecord::Schema.define(version: 2020_02_26_011416) do
 
   create_table "fp_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", limit: 15, null: false
@@ -20,6 +20,18 @@ ActiveRecord::Schema.define(version: 2020_02_21_020505) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_fp_users_on_email", unique: true
+  end
+
+  create_table "reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "fp_user_id", null: false
+    t.bigint "user_id"
+    t.date "date", null: false
+    t.time "start_time", null: false
+    t.boolean "reserved", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["fp_user_id"], name: "index_reservations_on_fp_user_id"
+    t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -32,4 +44,6 @@ ActiveRecord::Schema.define(version: 2020_02_21_020505) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "reservations", "fp_users"
+  add_foreign_key "reservations", "users"
 end
