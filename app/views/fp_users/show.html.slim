@@ -1,3 +1,24 @@
 h1 FPユーザページ
 
 = "ようこそ#{@fp_user.name}さん"
+= link_to "全体の確認", reservations_path, class: "btn btn-outline-info btn-sm"
+br
+br
+h2 予約枠一覧
+- if @reservations.present?
+  table.table.table-hover.table-sm.table-responsive-sm.text-nowrap
+    thead
+      tr
+        th User
+        th 開始
+        th 詳細
+
+    tbody
+      - @reservations.each do |reservation|
+        tr
+          - if reservation.user_id.present?
+            td = reservation.user.name
+          - else
+            td = "なし"
+          td = reservation.start_time
+          td = link_to '詳細', reservation_path(reservation.id), class: "btn btn-outline-info btn-sm"
