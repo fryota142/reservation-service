@@ -12,7 +12,10 @@
               = link_to "ホーム", root_path, style: "color:white;"
             - if logged_in?
               li.nav-item.active.nav-link
-                = link_to "ユーザ情報", user_path(id: current_user.id), style: "color:white;"
+                - if current_user.class == User
+                  = link_to "ユーザ情報", user_path(id: current_user.id), style: "color:white;"
+                - elsif current_user.class == FpUser
+                  = link_to "ユーザ情報", fp_user_path(id: current_user.id), style: "color:white;"
               li.nav-item.active.nav-link
                 = link_to "ログアウト", logout_path, method: :delete, style: "color:white;"
             - else

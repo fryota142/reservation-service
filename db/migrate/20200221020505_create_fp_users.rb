@@ -1,6 +1,6 @@
-class CreateUsers < ActiveRecord::Migration[5.2]
+class CreateFpUsers < ActiveRecord::Migration[5.2]
   def change
-    create_table :users do |t|
+    create_table :fp_users do |t|
       t.string :name, limit: 15, null: false
       t.string :email, limit: 64, null: false
       t.string :password_digest, null: false

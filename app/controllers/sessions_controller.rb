@@ -2,8 +2,12 @@ class SessionsController < ApplicationController
   def new; end
 
   def create
-    user = User.find_by(email: session_params['email'])
-    if user&.authenticate(session_params['password'])
+    if ActiveRecord::Type::Boolean.new.cast(session_params[:check_fp])
+      user = FpUser.find_by(email: session_params[:email])
+    else
+      user = User.find_by(email: session_params[:email])
+    end
+    if user&.authenticate(session_params[:password])
       log_in user
       redirect_to user
     else
@@ -20,7 +24,7 @@ class SessionsController < ApplicationController
   private
 
   def session_params
-    params.require(:session).permit(:email, :password)
+    params.require(:session).permit(:email, :password, :check_fp)
   end
 end
 
