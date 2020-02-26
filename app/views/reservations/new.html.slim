@@ -1,0 +1,14 @@
+.row
+  .col-md-8.mx-auto
+    #calendar
+
+.text-center
+  h1 予約
+
+.row
+  .col-md-6.mx-auto
+    = bootstrap_form_for @reservation do |f|
+      = f.date_select :date
+      = f.time_select :start_time, minute_step: 30, start_hour: 10, end_hour: 18
+
+      = f.primary "登録", class: "btn btn-outline-primary"

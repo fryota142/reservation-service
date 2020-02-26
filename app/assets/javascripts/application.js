@@ -11,8 +11,25 @@
 // about supported directives.
 //
 //= require jquery3
+//= require moment
+//= require fullcalendar
+//= require fullcalendar/lang/ja
 //= require rails-ujs
 //= require popper
 //= require bootstrap
 //= require turbolinks
 //= require_tree .
+
+$(function(){
+    $('#calendar').fullCalendar({
+        events: '/reservation.json',
+        selectable: true,
+        selectHelper: true,
+        select: function(start, end, allDay) {
+            console.log('start:' + start);
+            console.log('end:' + end);
+            console.log('allDay:' + allDay);
+            alert('selected');
+        }
+    });
+});
