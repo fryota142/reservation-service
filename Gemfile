@@ -62,7 +62,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'slim-rails', '3.1.3'
-gem "bootstrap", "~> 4.2.1"
+gem "bootstrap", "~> 4.3.1"
 gem "bootstrap_form", "~>4.1.0"
 gem 'jquery-rails'
 gem 'pry-byebug'
