@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   resources :users
   resources :fp_users
   resources :reservations
+  resources :calendars
 end

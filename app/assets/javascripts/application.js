@@ -22,7 +22,7 @@
 
 $(function(){
     $('#calendar').fullCalendar({
-        events: '/reservation.json',
+        // events: '/reservation.json',
         selectable: true,
         selectHelper: true,
         select: function(start, end, allDay) {
