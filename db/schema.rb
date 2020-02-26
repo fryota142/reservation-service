@@ -25,8 +25,7 @@ ActiveRecord::Schema.define(version: 2020_02_26_011416) do
   create_table "reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "fp_user_id", null: false
     t.bigint "user_id"
-    t.date "date", null: false
-    t.time "start_time", null: false
+    t.datetime "start_time", null: false
     t.boolean "reserved", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
