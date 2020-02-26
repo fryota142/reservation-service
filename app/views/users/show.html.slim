@@ -1,3 +1,10 @@
 h1 ユーザページ
 
 = "ようこそ#{@user.name}さん"
+br
+br
+h3 予約
+- if @reservations.present?
+  - @reservations.each do | reservation |
+    = reservation.id
+    br
