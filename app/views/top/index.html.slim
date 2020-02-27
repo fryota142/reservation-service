@@ -1,4 +1,12 @@
-h1 Top
-= link_to "FP新規登録", new_fp_user_path, class: "btn btn-outline-primary"
-= link_to "新規登録", new_user_path, class: "btn btn-outline-primary"
-= link_to "ログイン", login_path, class: "btn btn-outline-success"
+.text-center
+    h1 Reservation Service
+br
+.row.justify-content-center
+  .col-6.col-sm-4
+    = link_to "FP新規登録", new_fp_user_path, class: "btn btn-outline-primary btn-block"
+  .col-6.col-sm-4
+    = link_to "ユーザ新規登録", new_user_path, class: "btn btn-outline-primary btn-block"
+br
+.row.justify-content-center
+  .col-6.col-sm-8
+    = link_to "ログイン", login_path, class: "btn btn-outline-success btn-block"
