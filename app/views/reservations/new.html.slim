@@ -1,10 +1,14 @@
+.col-md-8.mx-auto
+  = link_to "戻る", :back, class: "btn btn-outline-success"
+hr
+
 .text-center
   h1 予約
 
 .row
   .col-md-6.mx-auto
     = bootstrap_form_for @reservation do |f|
-      = f.datetime_select :start_time, minute_step: 30, start_hour: 10, end_hour: 18, delete_date: true
+      = f.datetime_select :start_time, minute_step: 30, start_hour: 10, end_hour: 17, delete_date: true
       = f.hidden_field :fp_user_id, value: current_user.id
 
       = f.primary "登録", class: "btn btn-outline-primary"

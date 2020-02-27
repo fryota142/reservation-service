@@ -1,6 +1,26 @@
-h1 予約情報の詳細
-= @reservation.fp_user.name
-= @reservation.start_time
+.col-md-8.mx-auto
+  = link_to "戻る", :back, class: "btn btn-outline-success"
+hr
 
-- if current_user.class == User && !@reservation.reserved?
-  = link_to '予約', reservation_path(@reservation.id), method: :patch, class: "btn btn-outline-info btn-sm"
+.text-center
+  h1 予約情報
+  br
+
+.col-8.mx-auto
+  h3 時間
+  li = @reservation.start_time
+  br
+  h3 担当FP
+  br
+  .row
+    .col-2
+      = image_tag  "illustration.png", style: "width: 120px; height: 120px; border-radius: 50%;"
+    .col-6
+      = "名前：#{@reservation.fp_user.name}"
+      br
+      = "自己紹介"
+      br
+      = "#{@reservation.fp_user.introduction}"
+  - if current_user.class == User && !@reservation.reserved?
+    br
+    = link_to '予約する', reservation_path(@reservation.id), method: :patch, class: "btn btn-outline-success btn-block"
