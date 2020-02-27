@@ -1,10 +1,20 @@
-h1 FPユーザページ
-
-= "ようこそ#{@fp_user.name}さん"
-= link_to "全体の確認", reservations_path, class: "btn btn-outline-info btn-sm"
+.text-center
+  h1 FPユーザページ
+br
+.row.justify-content-center
+  .col-2.text-center
+    = image_tag  "illustration.png", style: "width: 120px; height: 120px; border-radius: 50%;"
+    = link_to '編集する', edit_fp_user_path(@fp_user.id), class: "btn btn-outline-success btn-sm"
+  .col-4
+    = "名前：#{@fp_user.name}"
+    br
+    = "自己紹介"
+    br
+    = "#{@fp_user.introduction}"
 br
 br
-h2 予約枠一覧
+.text-center
+  h2 予約枠一覧
 - if @reservations.present?
   table.table.table-hover.table-sm.table-responsive-sm.text-nowrap
     thead
@@ -12,6 +22,7 @@ h2 予約枠一覧
         th User
         th 開始
         th 詳細
+        th 削除
 
     tbody
       - @reservations.each do |reservation|
@@ -22,3 +33,4 @@ h2 予約枠一覧
             td = "なし"
           td = reservation.start_time
           td = link_to '詳細', reservation_path(reservation.id), class: "btn btn-outline-info btn-sm"
+          td = link_to '削除', reservation_path(reservation.id), method: :delete, class: "btn btn-outline-danger btn-sm"

@@ -21,9 +21,22 @@ class FpUsersController < ApplicationController
     redirect_to :root, alert: 'User not found'
   end
 
+  def edit
+    @fp_user = FpUser.find(params[:id])
+  end
+
+  def update
+    @fp_user = FpUser.find(params[:id])
+    if @fp_user.update(fpuser_params)
+      redirect_to @fp_user
+    else
+      render 'edit'
+    end
+  end
+
   private
   def fpuser_params
-    params.require(:fp_user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:fp_user).permit(:name, :email, :password, :password_confirmation, :introduction)
   end
 
   def require_login
