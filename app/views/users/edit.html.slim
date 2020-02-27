@@ -1,0 +1,10 @@
+.text-center
+  h1 ユーザー情報変更
+
+.row
+  .col-md-6.mx-auto
+    = bootstrap_form_for @user do |f|
+      = f.text_field :name, label: "名前"
+      = f.text_area :introduction, label: "自己紹介"
+
+      = f.primary "変更", class: "btn btn-outline-primary"
