@@ -51,6 +51,12 @@ $(document).ready(function() {
         center: 'title',
         right: 'month,agendaWeek,agendaDay'
       },
+      eventColor: '#63ceef',
+      minTime: "10:00:00",
+      maxTime: "18:00:00",
+      defaultTimedEventDuration: '10:00:00',
+      slotDuration: '00:30:00',
+      snapDuration: '00:30:00',
       navLinks: true,
       selectable: true,
       selectHelper: true,
@@ -69,27 +75,10 @@ $(document).ready(function() {
       },
       timezone: 'UTC',
       events: '/events.json',
-      editable: true
+      editable: true,
+      eventClick: function(info) {
+        window.location.href = ('/reservations/' + info.id);
+      }
     });
 
 });
-
-// $(document).ready(function() {
-//     $('#calendar').fullCalendar({
-//       events: '/events.json',
-//       eventColor: '#63ceef',
-//     //   editable: true
-//     });
-// });
-
-// $(document).ready(function() {
-//     $('#calendar').fullCalendar({
-//       events: 
-//       [
-//           {
-//               start: "2020-02-26 07:37:31",
-//               end: "2020-02-26 08:00:31"
-//           }
-//       ],
-//     });
-// });

@@ -40,10 +40,15 @@ class ReservationsController < ApplicationController
     respond_to do |format|
       format.html 
       format.json do
-        json_object = @events.map { |event| {start: event.start_time, end: event.start_time} }
+        json_object = @events.map { |event| {id: event.id, start: event.start_time, end: event.start_time + 1800} }
         render(json: json_object) 
       end
     end  
+  end
+
+  def event_new
+    @reservation = Reservation.new
+    render plain: render_to_string(partial: 'form_new', layout: false, locals: { event: @reservation })
   end
 
   def event_create
