@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   resources :fp_users
   resources :reservations
   resources :calendars
+  get '/events', to: 'reservations#events'
+  
 end

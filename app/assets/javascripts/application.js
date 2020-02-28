@@ -20,16 +20,22 @@
 //= require turbolinks
 //= require_tree .
 
-$(function(){
+$(document).ready(function() {
     $('#calendar').fullCalendar({
-        // events: '/reservation.json',
-        selectable: true,
-        selectHelper: true,
-        select: function(start, end, allDay) {
-            console.log('start:' + start);
-            console.log('end:' + end);
-            console.log('allDay:' + allDay);
-            alert('selected');
-        }
+      events: '/events.json',
+      eventColor: '#63ceef',
+    //   editable: true
     });
 });
+
+// $(document).ready(function() {
+//     $('#calendar').fullCalendar({
+//       events: 
+//       [
+//           {
+//               start: "2020-02-26 07:37:31",
+//               end: "2020-02-26 08:00:31"
+//           }
+//       ],
+//     });
+// });

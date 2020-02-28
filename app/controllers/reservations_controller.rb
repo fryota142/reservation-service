@@ -35,6 +35,17 @@ class ReservationsController < ApplicationController
     redirect_to fp_user_path
   end
 
+  def events
+    @events = Reservation.all
+    respond_to do |format|
+      format.html 
+      format.json do
+        json_object = @events.map { |event| {start: event.start_time, end: event.start_time} }
+        render(json: json_object) 
+      end
+    end  
+  end
+
   private
 
   def reservation_params
