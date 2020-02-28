@@ -10,5 +10,6 @@ Rails.application.routes.draw do
   resources :reservations
   resources :calendars
   get '/events', to: 'reservations#events'
-  
+  post '/events/create', to: 'reservations#event_create'
+
 end

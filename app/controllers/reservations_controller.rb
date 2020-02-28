@@ -46,6 +46,15 @@ class ReservationsController < ApplicationController
     end  
   end
 
+  def event_create
+    @reservation = Reservation.new(fp_user_id: current_user.id, start_time: params[:start_time])
+    if @reservation.save
+      render :show
+    else
+      render :new
+    end
+  end
+
   private
 
   def reservation_params
