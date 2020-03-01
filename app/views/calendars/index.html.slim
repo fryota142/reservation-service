@@ -1,3 +1,35 @@
 .row
   .col-md-8.mx-auto
-    #calendar
+    .text-center
+      h2 予約一覧
+    br
+    - if current_user.class == FpUser
+      #fp_calendar
+    - else
+      #user_calendar
+
+br
+.text-center
+  h2 予約一覧
+br
+table.table.table-hover.table-sm.table-responsive-sm.text-nowrap
+  thead
+    tr
+      th FP名前
+      th 開始
+      th 詳細
+      - if current_user.class == User
+        th 予約
+
+  tbody
+    - @reservations.each do |reservation|
+      tr
+        td = reservation.fp_user.name
+        td = reservation.start_time
+        td = link_to '詳細', reservation_path(reservation.id), class: "btn btn-outline-info btn-sm"
+        - if current_user.class == User && !reservation.reserved?
+          td = link_to '予約する', reservation_path(reservation.id), method: :patch, class: "btn btn-outline-success btn-sm", data: { confirm: '本当に予約しますか?' }
+        - else
+          td
+            button.btn.btn-secondary.btn-sm[type="button" disabled]
+              | 予約済
