@@ -2,10 +2,12 @@
   h1 ユーザページ
 br
 .row.justify-content-center
-  .col-2.text-center
-    = image_tag  "illustration.png", style: "width: 120px; height: 120px; border-radius: 50%;"
+  .col-4.col-sm-4.col-lg-2.text-center
+    = gravatar_for(@user)
+    br
+    br
     = link_to '編集する', edit_user_path(@user.id), class: "btn btn-outline-success btn-sm"
-  .col-6
+  .col-8.col-sm-8.col-lg-4
     = "名前：#{@user.name}"
     br
     = "自己紹介"
@@ -20,7 +22,7 @@ br
     thead
       tr
         th FP名前
-        th 開始
+        th 開始時間
         th 詳細
 
     tbody
@@ -32,3 +34,8 @@ br
             td = "なし"
           td = reservation.start_time
           td = link_to '詳細', reservation_path(reservation.id), class: "btn btn-outline-info btn-sm"
+- else
+  .text-center
+    br
+    h4 予約がありません
+    = link_to '新規予約', calendars_path, class: "btn btn-outline-success"
