@@ -1,4 +1,6 @@
 class ReservationsController < ApplicationController
+  before_action :correct_fp_user, only: %i(edit)
+
   def index
     @reservations = Reservation.all
   end
@@ -19,11 +21,19 @@ class ReservationsController < ApplicationController
 
   def show
     @reservation = Reservation.find(params[:id])
+  rescue ActiveRecord::RecordNotFound => e
+    redirect_to :root, alert: 'Reservation not found'
+  end
+
+  def edit
+    @reservation = Reservation.find(params[:id])
+  rescue ActiveRecord::RecordNotFound => e
+    redirect_to :root, alert: 'Reservation not found'
   end
 
   def update
-    @reservation = Reservation.find(params[:id])
-    if @reservation.update(user_id: current_user.id, reserved: true)
+    @reservation = Reservation.find(reservation_params[:id])
+    if @reservation.update(user_id: reservation_params[:user_id], reserved: reservation_params[:reserved])
       render :show
     else
       render :new
@@ -38,12 +48,14 @@ class ReservationsController < ApplicationController
   def events
     @events = Reservation.all
     respond_to do |format|
-      format.html 
+      format.html
       format.json do
-        json_object = @events.map { |event| {id: event.id, start: event.start_time, end: event.start_time + 1800} }
-        render(json: json_object) 
+        json_object = @events.map { |event|
+          label_color = event.reserved? ? "#63ceef" : "#ffa500"
+          {id: event.id, start: event.start_time, end: event.start_time + 1800, color: label_color} }
+        render(json: json_object)
       end
-    end  
+    end
   end
 
   def event_new
@@ -53,7 +65,7 @@ class ReservationsController < ApplicationController
 
   def event_create
     @reservation = Reservation.new(fp_user_id: current_user.id, start_time: params[:start_time])
-    if @reservation.save
+    if current_user.class == FpUser && @reservation.save
       render :show
     else
       render :new
@@ -63,7 +75,12 @@ class ReservationsController < ApplicationController
   private
 
   def reservation_params
-    params.require(:reservation).permit(:fp_user_id, :user_id, :start_time)
+    params.require(:reservation).permit(:id, :fp_user_id, :user_id, :start_time, :reserved)
+  end
+
+  def correct_fp_user
+    @fp_user = FpUser.find(params[:id])
+    redirect_to(root_url) unless current_user == @fp_user
   end
 
   def require_login

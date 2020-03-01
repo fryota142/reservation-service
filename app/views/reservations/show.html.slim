@@ -1,5 +1,5 @@
 .col-md-8.mx-auto
-  = link_to "戻る", :back, class: "btn btn-outline-success"
+  = link_to "戻る", calendars_path, class: "btn btn-outline-success"
 hr
 
 .text-center
@@ -13,14 +13,23 @@ hr
   h3 担当FP
   br
   .row
-    .col-2
-      = image_tag  "illustration.png", style: "width: 120px; height: 120px; border-radius: 50%;"
-    .col-6
+    .col-4.col-sm-4.col-lg-2.text-center
+      = gravatar_for(@reservation.fp_user)
+    .col-8.col-sm-8.col-lg-8
       = "名前：#{@reservation.fp_user.name}"
       br
       = "自己紹介"
       br
       = "#{@reservation.fp_user.introduction}"
+  br
   - if current_user.class == User && !@reservation.reserved?
-    br
-    = link_to '予約する', reservation_path(@reservation.id), method: :patch, class: "btn btn-outline-success btn-block"
+    = link_to '予約する', reservation_path(@reservation.id, reservation: { id: @reservation.id, user_id: current_user.id, reserved: true }), method: :patch, class: "btn btn-outline-success btn-block", data: { confirm: '本当に予約しますか?' }
+  - else
+    - if current_user.class == User && @reservation.user == current_user
+      = link_to 'キャンセル', reservation_path(@reservation.id, reservation: { id: @reservation.id, user_id: nil, reserved: false }), method: :patch, class: "btn btn-outline-danger btn-block", data: { confirm: '本当にキャンセルしますか?' }
+    - else
+      - if current_user.class == FpUser && @reservation.fp_user == current_user
+        = link_to '編集する', edit_reservation_path(@reservation.id), class: "btn btn-outline-success btn-block"
+      - else
+        button.btn.btn-secondary.btn-block[type="button" disabled]
+          | 他のユーザが予約済みです
