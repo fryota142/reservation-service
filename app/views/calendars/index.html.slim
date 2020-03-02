@@ -1,0 +1,9 @@
+.row
+  .col-md-8.mx-auto
+    .text-center
+      h2 予約一覧
+    br
+    - if current_user.class == FpUser
+      #fp_calendar
+    - else
+      #user_calendar

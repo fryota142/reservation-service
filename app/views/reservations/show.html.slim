@@ -1,0 +1,55 @@
+.col-md-8.mx-auto
+  = link_to "戻る", calendars_path, class: "btn btn-outline-success"
+hr
+
+.text-center
+  h1 予約情報
+  br
+
+.col-8.mx-auto
+  h3 時間
+  li = @reservation.start_time
+  br
+  h3 担当FP
+  br
+  .row
+    .col-4.col-sm-4.col-lg-2.text-center
+      = gravatar_for(@reservation.fp_user)
+    .col-8.col-sm-8.col-lg-8
+      = "名前：#{@reservation.fp_user.name}"
+      = link_to '(情報を見る)', fp_user_path(@reservation.fp_user_id)
+      br
+      = "自己紹介"
+      br
+      = "#{@reservation.fp_user.introduction}"
+  br
+  h3 ユーザ
+  br
+  - if @reservation.user.present?
+    .row
+      .col-4.col-sm-4.col-lg-2.text-center
+        = gravatar_for(@reservation.user)
+      .col-8.col-sm-8.col-lg-8
+        = "名前：#{@reservation.user.name}"
+        = link_to '(情報を見る)', user_path(@reservation.user_id)
+        br
+        = "自己紹介"
+        br
+        = "#{@reservation.user.introduction}"
+  - else
+    .col-8.col-sm-8.col-lg-8
+      p 現在予約しているユーザはいません
+
+  br
+  - if current_user.class == User && !@reservation.reserved?
+    = link_to '予約する', user_update_reservations_path(@reservation.id, reservation: { id: @reservation.id, user_id: current_user.id, reserved: true }), method: :patch, class: "btn btn-outline-success btn-block", data: { confirm: '本当に予約しますか?' }
+  - else
+    - if current_user.class == User && @reservation.user == current_user
+      = link_to 'キャンセル', user_update_reservations_path(@reservation.id, reservation: { id: @reservation.id, user_id: nil, reserved: false }), method: :patch, class: "btn btn-outline-danger btn-block", data: { confirm: '本当にキャンセルしますか?' }
+    - else
+      - if current_user.class == FpUser && @reservation.fp_user == current_user
+        = link_to '編集する', edit_reservation_path(@reservation.id), class: "btn btn-outline-success btn-block"
+        = link_to '削除する', reservation_path(@reservation.id), method: :delete, class: "btn btn-outline-danger btn-block", data: { confirm: '本当に削除しますか?' }
+      - else
+        button.btn.btn-secondary.btn-block[type="button" disabled]
+          | 他のユーザが予約済みです

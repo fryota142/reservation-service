@@ -1,0 +1,40 @@
+h1 予約一覧
+br
+table.table.table-hover.table-sm.table-responsive-sm.text-nowrap
+  thead
+    tr
+      th FP名前
+      th 開始
+      th 詳細
+      - if current_user.class == User
+        th 予約
+
+  tbody
+    - @reservations.each do |reservation|
+      tr
+        td = reservation.fp_user.name
+        td = reservation.start_time
+        td = link_to '詳細', reservation_path(reservation.id), class: "btn btn-outline-info btn-sm"
+        - if current_user.class == User && !reservation.reserved?
+          td = link_to '予約する', reservation_path(reservation.id), method: :patch, class: "btn btn-outline-info btn-sm"
+        - else
+          td
+            button.btn.btn-secondary.btn-sm[type="button" disabled]
+              | 予約済
+
+.row
+  - @reservations.each do |reservation|
+    .col-sm-4
+      .card
+        .card-body
+          h5.card-title
+            = reservation.fp_user.name
+          p.card-text
+            = reservation.start_time
+          .row
+            = link_to '詳細', reservation_path(reservation.id), class: "btn btn-outline-info btn-sm"
+            - if current_user.class == User && !reservation.reserved?
+              = link_to '予約する', reservation_path(reservation.id), method: :patch, class: "btn btn-outline-info btn-sm"
+            - else
+              button.btn.btn-secondary.btn-sm[type="button" disabled]
+                | 予約済

@@ -1,3 +1,43 @@
-h1 ユーザページ
+.text-center
+  h1 ユーザページ
+br
+.row.justify-content-center
+  .col-4.col-sm-4.col-lg-2.text-center
+    = gravatar_for(@user)
+    br
+    br
+    - if current_user == @user
+      = link_to '編集する', edit_user_path(@user.id), class: "btn btn-outline-success btn-sm"
+  .col-8.col-sm-8.col-lg-4
+    = "名前：#{@user.name}"
+    br
+    = "自己紹介"
+    br
+    = "#{@user.introduction}"
+br
+br
+.text-center
+  h2 予約一覧
+- if @reservations.present?
+  table.table.table-hover.table-sm.table-responsive-sm.text-nowrap
+    thead
+      tr
+        th FP名前
+        th 開始時間
+        th 詳細
 
-= "ようこそ#{@user.name}さん"
+    tbody
+      - @reservations.each do |reservation|
+        tr
+          - if reservation.fp_user_id.present?
+            td = reservation.fp_user.name
+          - else
+            td = "なし"
+          td = reservation.start_time
+          td = link_to '詳細', reservation_path(reservation.id), class: "btn btn-outline-info btn-sm"
+- else
+  .text-center
+    br
+    h4 予約がありません
+    - if current_user == @user
+      = link_to '新規予約', calendars_path, class: "btn btn-outline-success"

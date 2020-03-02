@@ -9,8 +9,20 @@
  * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
- *
+ *= require fullcalendar
  */
 // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
 @import "rails_bootstrap_forms";
+
+/* 日曜日 */
+.fc-sun {
+    color: red;
+    background-color: #fff0f0;
+}
+ 
+/* 土曜日 */
+.fc-sat {
+    color: blue;
+    background-color: #f0f0ff;
+}

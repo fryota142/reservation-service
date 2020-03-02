@@ -1,0 +1,17 @@
+.col-md-8.mx-auto
+  = link_to "戻る", fp_user_path(@fp_user), class: "btn btn-outline-success"
+hr
+
+.text-center
+  h1 FPユーザー情報変更
+
+.row
+  .col-md-6.mx-auto
+    = bootstrap_form_for @fp_user do |f|
+      = f.text_field :name, label: "名前"
+      = f.text_field :email, label: "メールアドレス"
+      = f.password_field :password, label: "パスワード"
+      = f.password_field :password_confirmation, label: "パスワード確認"
+      = f.text_area :introduction, label: "自己紹介"
+
+      = f.primary "変更", class: "btn btn-outline-primary"
