@@ -79,7 +79,7 @@ class ReservationsController < ApplicationController
   end
 
   def correct_fp_user
-    @fp_user = FpUser.find(params[:id])
+    @fp_user = FpUser.find(current_user.id)
     redirect_to(root_url) unless current_user == @fp_user
   end
 

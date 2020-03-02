@@ -18,7 +18,7 @@ class FpUsersController < ApplicationController
 
   def show
     @fp_user = FpUser.find(params[:id])
-    @reservations = Reservation.all.where(fp_user_id: current_user.id)
+    @reservations = Reservation.all.where(fp_user_id: @fp_user.id)
   rescue ActiveRecord::RecordNotFound => e
     redirect_to :root, alert: 'User not found'
   end

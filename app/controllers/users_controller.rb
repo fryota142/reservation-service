@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @reservations = Reservation.all.where(user_id: current_user.id)
+    @reservations = Reservation.all.where(user_id: @user.id)
   rescue ActiveRecord::RecordNotFound => e
     redirect_to :root, alert: 'User not found'
   end
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
   end
 
   def correct_user
-    @user = User.find(params[:id])
+    @user = User.find(current_user.id)
     redirect_to(root_url) unless current_user == @user
   end
 
