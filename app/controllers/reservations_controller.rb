@@ -1,5 +1,6 @@
 class ReservationsController < ApplicationController
-  before_action :correct_fp_user, only: %i(edit)
+  before_action :correct_fp_user, only: %i(edit update destroy)
+  before_action :correct_user, only: %i(user_update)
 
   def index
     @reservations = Reservation.all
@@ -13,8 +14,10 @@ class ReservationsController < ApplicationController
   def create
     @reservation = Reservation.new(reservation_params)
     if @reservation.save
+      flash[:success] = "予約枠を作成しました"
       render :show
     else
+      flash[:danger] = "予約枠を作成できませんでした"
       render :new
     end
   end
@@ -32,16 +35,30 @@ class ReservationsController < ApplicationController
   end
 
   def update
-    @reservation = Reservation.find(reservation_params[:id])
-    if @reservation.update(user_id: reservation_params[:user_id], reserved: reservation_params[:reserved])
+    @reservation = Reservation.find(params[:id])
+    if @reservation.update(reservation_params)
+      flash[:success] = "予約枠を更新しました"
       render :show
     else
-      render :new
+      flash[:danger] = "予約枠更新に失敗しました"
+      render :show
+    end
+  end
+
+  def user_update
+    @reservation = Reservation.find(reservation_params[:id])
+    if @reservation.update(user_id: reservation_params[:user_id], reserved: reservation_params[:reserved])
+      flash[:success] = "予約しました"
+      render :show
+    else
+      flash[:danger] = "予約に失敗しました"
+      render :show
     end
   end
 
   def destroy
     Reservation.find(params[:id]).destroy
+    flash[:danger] = "予約枠を削除しました"
     redirect_to fp_user_path
   end
 
@@ -66,9 +83,11 @@ class ReservationsController < ApplicationController
   def event_create
     @reservation = Reservation.new(fp_user_id: current_user.id, start_time: params[:start_time])
     if current_user.class == FpUser && @reservation.save
+      flash[:success] = "予約枠を作成しました"
       render :show
     else
-      render :new
+      flash[:danger] = "予約枠を作成できませんでした"
+      redirect_to calendars_path
     end
   end
 
@@ -81,6 +100,11 @@ class ReservationsController < ApplicationController
   def correct_fp_user
     @fp_user = FpUser.find(current_user.id)
     redirect_to(root_url) unless current_user == @fp_user
+  end
+
+  def correct_user
+    @user = User.find(current_user.id)
+    redirect_to(root_url) unless current_user == @user
   end
 
   def require_login

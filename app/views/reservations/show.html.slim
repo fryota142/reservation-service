@@ -23,10 +23,10 @@ hr
       = "#{@reservation.fp_user.introduction}"
   br
   - if current_user.class == User && !@reservation.reserved?
-    = link_to '予約する', reservation_path(@reservation.id, reservation: { id: @reservation.id, user_id: current_user.id, reserved: true }), method: :patch, class: "btn btn-outline-success btn-block", data: { confirm: '本当に予約しますか?' }
+    = link_to '予約する', user_update_reservations_path(@reservation.id, reservation: { id: @reservation.id, user_id: current_user.id, reserved: true }), method: :patch, class: "btn btn-outline-success btn-block", data: { confirm: '本当に予約しますか?' }
   - else
     - if current_user.class == User && @reservation.user == current_user
-      = link_to 'キャンセル', reservation_path(@reservation.id, reservation: { id: @reservation.id, user_id: nil, reserved: false }), method: :patch, class: "btn btn-outline-danger btn-block", data: { confirm: '本当にキャンセルしますか?' }
+      = link_to 'キャンセル', user_update_reservations_path(@reservation.id, reservation: { id: @reservation.id, user_id: nil, reserved: false }), method: :patch, class: "btn btn-outline-danger btn-block", data: { confirm: '本当にキャンセルしますか?' }
     - else
       - if current_user.class == FpUser && @reservation.fp_user == current_user
         = link_to '編集する', edit_reservation_path(@reservation.id), class: "btn btn-outline-success btn-block"
