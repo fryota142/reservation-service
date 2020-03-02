@@ -6,7 +6,8 @@ br
     = gravatar_for(@user)
     br
     br
-    = link_to '編集する', edit_user_path(@user.id), class: "btn btn-outline-success btn-sm"
+    - if current_user == @user
+      = link_to '編集する', edit_user_path(@user.id), class: "btn btn-outline-success btn-sm"
   .col-8.col-sm-8.col-lg-4
     = "名前：#{@user.name}"
     br
@@ -38,4 +39,5 @@ br
   .text-center
     br
     h4 予約がありません
-    = link_to '新規予約', calendars_path, class: "btn btn-outline-success"
+    - if current_user == @user
+      = link_to '新規予約', calendars_path, class: "btn btn-outline-success"

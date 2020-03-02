@@ -84,7 +84,7 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(fp_user_id: current_user.id, start_time: params[:start_time])
     if current_user.class == FpUser && @reservation.save
       flash[:success] = "予約枠を作成しました"
-      render :show
+      redirect_to @reservation
     else
       flash[:danger] = "予約枠を作成できませんでした"
       redirect_to calendars_path

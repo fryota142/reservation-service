@@ -6,7 +6,8 @@ br
     = gravatar_for(@fp_user)
     br
     br
-    = link_to '編集する', edit_fp_user_path(@fp_user.id), class: "btn btn-outline-success btn-sm"
+    - if current_user == @fp_user
+      = link_to '編集する', edit_fp_user_path(@fp_user.id), class: "btn btn-outline-success btn-sm"
   .col-8.col-sm-8.col-lg-4
     = "名前：#{@fp_user.name}"
     br
@@ -24,7 +25,8 @@ br
         th ユーザ名
         th 開始時間
         th 詳細
-        th 削除
+        - if current_user == @fp_user
+          th 削除
 
     tbody
       - @reservations.each do |reservation|
@@ -35,9 +37,11 @@ br
             td = "なし"
           td = reservation.start_time
           td = link_to '詳細', reservation_path(reservation.id), class: "btn btn-outline-info btn-sm"
-          td = link_to '削除', reservation_path(reservation.id), method: :delete, class: "btn btn-outline-danger btn-sm"
+          - if current_user == @fp_user
+            td = link_to '削除', reservation_path(reservation.id), method: :delete, class: "btn btn-outline-danger btn-sm"
 - else
   .text-center
     br
     h4 予約がありません
-    = link_to '新規予約', calendars_path, class: "btn btn-outline-success"
+    - if current_user == @fp_user
+      = link_to '新規予約', calendars_path, class: "btn btn-outline-success"
